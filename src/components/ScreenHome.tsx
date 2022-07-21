@@ -15,6 +15,7 @@ export const Home: React.FC<Props> = ({}) => {
   // context, vars, and states
   const toast = useToast();
   const [readiness, setReadiness] = React.useState<boolean>(false);
+  const [diceval, setDiceval] = React.useState<number>(0);
 
   // helper funcs
   const funcLoadData = async () => {};
@@ -46,7 +47,7 @@ export const Home: React.FC<Props> = ({}) => {
         </div>
         <div className="font-bold mb-2 text-5xl">
           <Link className="" to={`/`}>
-            #kubefe~0
+            #kubefe~{diceval}
           </Link>
         </div>
         <div className="text-2xl mb-4">
@@ -58,18 +59,23 @@ export const Home: React.FC<Props> = ({}) => {
             size="lg"
             borderRadius={0}
             leftIcon={<Icon as={GiDiceFire} />}
-            onClick={() => {
-              kubeapi.ping().then((ok) => {
-                if (!ok) {
-                  funcToast("error", "Failure", "Cannot connect to server.");
-                } else {
-                  funcToast(
-                    "success",
-                    "Success",
-                    "Success connecting to server!"
-                  );
-                }
-              });
+            onClick={async () => {
+              const connected = await kubeapi.ping();
+              if (!connected) {
+                return funcToast(
+                  "error",
+                  "Failure",
+                  "Cannot connect to server."
+                );
+              }
+
+              const diceresult = await kubeapi.rolldice(1);
+              setDiceval(diceresult);
+              if (!diceresult) {
+                return funcToast("error", "Failure", "Cannot roll dice.");
+              }
+
+              funcToast("success", "Success", "Dice rolled nicely!");
             }}
           >
             Roll a Dice
