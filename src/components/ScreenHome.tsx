@@ -5,6 +5,7 @@ import { useToast, Button } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/icons";
 import { GiDiceFire } from "react-icons/gi";
 import icon from "../../public/icon.png";
+import * as kubeapi from "../services/kubeapi";
 
 import config from "../config";
 
@@ -58,7 +59,17 @@ export const Home: React.FC<Props> = ({}) => {
             borderRadius={0}
             leftIcon={<Icon as={GiDiceFire} />}
             onClick={() => {
-              funcToast("success", "Connected!", "Success!");
+              kubeapi.ping().then((ok) => {
+                if (!ok) {
+                  funcToast("error", "Failure", "Cannot connect to server.");
+                } else {
+                  funcToast(
+                    "success",
+                    "Success",
+                    "Success connecting to server!"
+                  );
+                }
+              });
             }}
           >
             Roll a Dice
