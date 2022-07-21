@@ -1,0 +1,17 @@
+{
+  "include": [
+    "src/**/*",
+    "tailwind.config.js",
+    "src/types.d.ts"
+  ],
+  "compilerOptions": {
+    "target": "es2021",
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "strict": true,
+    "types": [
+      "node"
+    ]
+  }
+}
