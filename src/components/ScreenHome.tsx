@@ -45,7 +45,7 @@ export const Home: React.FC<Props> = ({}) => {
         </div>
         <div className="font-bold mb-2 text-5xl">
           <Link className="" to={`/`}>
-            #kubefe
+            #kubefe~0
           </Link>
         </div>
         <div className="text-2xl mb-4">
